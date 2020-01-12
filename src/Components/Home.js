@@ -2,6 +2,9 @@ import React, {Component} from 'react'
 import Navbar from "./Navbar"
 import axios from 'axios'
 import { Link } from '@reach/router'
+import renderHTML from 'react-render-html'
+import '../style.css'
+import Moment from 'react-moment'
 
 class Home extends Component {
 
@@ -37,9 +40,22 @@ class Home extends Component {
                     <div className="mt-5 post-container">
                         { posts.map( post => (
                             <div key={ post.id } className="card corder-dark mb-3" style={{ width: '50rem' }}>
-                                <Link to={`/post/${post.id}`}>
-                                    {post.title.rendered}
-                                </Link>
+                                {/* Title */}
+                                <div className="card-header">
+                                    <Link to={`/post/${post.id}`}>
+                                        {post.title.rendered}
+                                    </Link>
+                                </div>
+                                {/*  Body  */}
+                                <div className="card-body">
+                                    <div className="card-text post-content">
+                                        { renderHTML(post.content.rendered) }
+                                    </div>
+                                </div>
+                                {/*  Footer  */}
+                                <div className="card-footer">
+                                    <Moment fromNow >{post.date}</Moment>
+                                </div>
                             </div>
                         ) ) }
                     </div>
